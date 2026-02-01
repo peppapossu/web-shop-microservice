@@ -1,0 +1,74 @@
+{
+  "type": "record",
+  "name": "OrderCreatedEvent",
+  "namespace": "com.ks.avro.order",
+  "doc": "Event emitted when a new order is created",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": "long",
+      "doc": "Unique customer identifier"
+    },
+    {
+      "name": "orderId",
+      "type": "long",
+      "doc": "Order identifier"
+    },
+    {
+      "name": "items",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Item",
+          "doc": "Item information",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "doc": "Item identifier"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Item name"
+            },
+            {
+              "name": "price",
+              "type": {
+                "type": "bytes",
+                "logicalType": "decimal",
+                "precision": 10,
+                "scale": 2
+              },
+              "doc": "Price of item"
+            },
+            {
+              "name": "quantity",
+              "type": "int",
+              "doc": "Amount of items"
+            },
+            {
+              "name": "sale",
+              "type": "int",
+              "default": 0,
+              "doc": "Discount percentage (0-100)"
+            },
+            {
+              "name": "totalPrice",
+              "type": {
+                "type": "bytes",
+                "logicalType": "decimal",
+                "precision": 10,
+                "scale": 2
+              },
+              "doc": "Total price of all items with discount"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Array of items included in the order"
+    }
+  ]
+}

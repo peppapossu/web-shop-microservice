@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/appUser/createAppUserTable.yml
+  - include:
+      file: db/migration/customer/createCustomerTable.yml
+  - include:
+      file: db/migration/jwt/createRefreshTokenTable.yml

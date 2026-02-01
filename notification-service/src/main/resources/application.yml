@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+
+  # DataBase
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${POSTGRES_NOT_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+  # Kafka
+  kafka:
+    bootstrap-servers: ${KAFKA}
+    consumer:
+      group-id: order-id
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      enable-auto-commit: false
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY}
+        specific.avro.reader: true
+    listener:
+      ack-mode: manual_immediate
+
+
+      # Liquibase
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/db.changelog-master.yml

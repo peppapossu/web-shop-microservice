@@ -1,0 +1,89 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+
+  application:
+    name: order-service
+  # DataBase
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${POSTGRES_ORD_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+  # Liquibase
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/db.changelog-master.yml
+
+  # Kafka
+  kafka:
+    bootstrap-servers: ${KAFKA}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      acks: all
+      retries: 2147483647
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY}
+        spring.json.add.type.headers: false
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        retry.backoff.ms: 100
+        delivery.timeout.ms: 120000
+
+grpc:
+  client:
+    inventory-service:
+      address: ${GRPC_SERVER}
+      negotiationType: plaintext
+
+# Protection for gRPC client
+resilience4j:
+  retry:
+    instances:
+      inventory:
+        maxAttempts: 3
+        waitDuration: 200ms
+        randomized-wait-factor: 0.5
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+  circuitbreaker:
+    instances:
+      inventory:
+        failureRateThreshold: 50
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+        minimum-number-of-calls: 5
+
+# Protection for Kafka producer
+  ratelimiter:
+    instances:
+      kafkaRate:
+        limitForPeriod: 500
+        limitRefreshPeriod: 1s
+
+  thread-pool-bulkhead:
+    instances:
+      kafkaProducer:
+        coreThreadPoolSize: 4
+        maxThreadPoolSize: 8
+        queueCapacity: 100
+
+# RSA Public & Private Keys
+jwt:
+  expiration: 900000 #1000*60*15
+  refresh-expiration: 604800000 #1000*60*60*24*7
+  header: Bearer
+  rsa:
+    public-key: ${JWT_PUBLIC_KEY_PATH}
+    private-key: ${JWT_PRIVATE_KEY_PATH}
