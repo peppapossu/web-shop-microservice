@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/migration/customer/createCustomerTable.yml
   - include:
       file: db/migration/jwt/createRefreshTokenTable.yml
+  - include:
+      file: db/migration/outbox/createOutboxEventTable.yml

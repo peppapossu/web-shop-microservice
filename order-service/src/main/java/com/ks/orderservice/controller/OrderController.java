@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
-    private final KafkaProducer kafkaProducer;
+//    private final KafkaProducer kafkaProducer;
     private final OrderMapper orderMapper;
 
     private final static String ORDER = "order";
@@ -34,20 +34,19 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
 
         OrderCreatedEvent orderCreatedEvent = orderService.checkAndReserveStock(createOrderRequest);
-
-        if (orderCreatedEvent.getItems().isEmpty()) {
-            return ResponseEntity.internalServerError().body(
-                    new ErrorApi(
-                            "500","Error get the item from the stock, try again later"));
-        }
-
-        kafkaProducer.send(
-                ORDER,
-                createOrderRequest.orderId().toString(),
-                orderCreatedEvent);
-
-        log.error("OrderService successfully sent message to Kafka: '{}'", createOrderRequest);
-
+        orderService.saveOrderToOutbox(orderCreatedEvent);
+//        if (orderCreatedEvent.getItems().isEmpty()) {
+//            return ResponseEntity.internalServerError().body(
+//                    new ErrorApi(
+//                            "500","Error get the item from the stock, try again later"));
+//        }
+//
+//        kafkaProducer.send(
+//                ORDER,
+//                createOrderRequest.orderId().toString(),
+//                orderCreatedEvent);
+//
+//        log.error("OrderService successfully sent message to Kafka: '{}'", createOrderRequest);
         return ResponseEntity.ok(orderMapper.toCreateOrderResponse(orderCreatedEvent));
     }
 }
