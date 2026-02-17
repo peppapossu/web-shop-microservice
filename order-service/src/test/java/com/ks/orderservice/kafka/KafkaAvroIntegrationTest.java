@@ -22,6 +22,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -52,8 +53,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Import(MockDataSourceConfig.class)
 class KafkaAvroIntegrationTest {
 
-    @Autowired
-    AvroMapper avroMapper;
+//    @Autowired
+//    AvroMapper avroMapper;
+
+    AvroMapper avroMapper = Mappers.getMapper(AvroMapper.class);
 
     @MockBean
     private RefreshTokenRepository refreshTokenRepository;
@@ -137,7 +140,6 @@ class KafkaAvroIntegrationTest {
         registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
         registry.add("spring.kafka.properties.schema.registry.url",
                 () -> "http://localhost:" + schemaRegistry.getMappedPort(8081));
-//                () -> "http://" + schemaRegistry.getHost() + ":" + schemaRegistry.getFirstMappedPort());
         registry.add("spring.kafka.consumer.properties.specific.avro.reader", () -> true);
     }
 
@@ -163,7 +165,7 @@ class KafkaAvroIntegrationTest {
 
         OrderCreatedEvent event = OrderCreatedEvent.newBuilder()
                 .setCustomerId(1)
-                .setOrderId(2)
+                .setOrderId(String.valueOf(2))
                 .setItems(items)
                 .build();
 

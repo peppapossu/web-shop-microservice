@@ -25,20 +25,22 @@ spring:
     change-log: classpath:db/migration/db.changelog-master.yml
 
   # Kafka
-  kafka:
-    bootstrap-servers: ${KAFKA}
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      acks: all
-      retries: 2147483647
-      properties:
-        schema.registry.url: ${SCHEMA_REGISTRY}
-        spring.json.add.type.headers: false
-        enable.idempotence: true
-        max.in.flight.requests.per.connection: 5
-        retry.backoff.ms: 100
-        delivery.timeout.ms: 120000
+#  kafka:
+#    bootstrap-servers: ${KAFKA}
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+#      acks: all
+#      retries: 2147483647
+#      properties:
+#        schema.registry.url: ${SCHEMA_REGISTRY}
+#        spring.json.add.type.headers: false
+#        enable.idempotence: true
+#        max.in.flight.requests.per.connection: 5
+#        retry.backoff.ms: 1000
+#        delivery.timeout.ms: 120000
+#        retries: 2147483647
+#        request.timeout.ms: 30000
 
 grpc:
   client:
@@ -65,19 +67,19 @@ resilience4j:
         waitDurationInOpenState: 10s
         minimum-number-of-calls: 5
 
-# Protection for Kafka producer
-  ratelimiter:
-    instances:
-      kafkaRate:
-        limitForPeriod: 500
-        limitRefreshPeriod: 1s
-
-  thread-pool-bulkhead:
-    instances:
-      kafkaProducer:
-        coreThreadPoolSize: 4
-        maxThreadPoolSize: 8
-        queueCapacity: 100
+  # Protection for Kafka producer
+#  ratelimiter:
+#    instances:
+#      kafkaRate:
+#        limitForPeriod: 500
+#        limitRefreshPeriod: 1s
+#
+#  thread-pool-bulkhead:
+#    instances:
+#      kafkaProducer:
+#        coreThreadPoolSize: 4
+#        maxThreadPoolSize: 8
+#        queueCapacity: 100
 
 # RSA Public & Private Keys
 jwt:

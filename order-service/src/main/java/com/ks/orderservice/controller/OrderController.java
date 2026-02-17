@@ -3,9 +3,9 @@ package com.ks.orderservice.controller;
 import com.ks.avro.order.OrderCreatedEvent;
 import com.ks.orderservice.dto.ErrorApi;
 import com.ks.orderservice.dto.order.CreateOrderRequest;
-import com.ks.orderservice.kafka.KafkaProducer;
 import com.ks.orderservice.mapper.OrderMapper;
 import com.ks.orderservice.service.OrderService;
+import com.ks.orderservice.service.OutboxService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
-//    private final KafkaProducer kafkaProducer;
     private final OrderMapper orderMapper;
+    private final OutboxService outboxService;
 
     private final static String ORDER = "order";
 
@@ -34,19 +34,15 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
 
         OrderCreatedEvent orderCreatedEvent = orderService.checkAndReserveStock(createOrderRequest);
-        orderService.saveOrderToOutbox(orderCreatedEvent);
-//        if (orderCreatedEvent.getItems().isEmpty()) {
-//            return ResponseEntity.internalServerError().body(
-//                    new ErrorApi(
-//                            "500","Error get the item from the stock, try again later"));
-//        }
-//
-//        kafkaProducer.send(
-//                ORDER,
-//                createOrderRequest.orderId().toString(),
-//                orderCreatedEvent);
-//
-//        log.error("OrderService successfully sent message to Kafka: '{}'", createOrderRequest);
+
+        if (orderCreatedEvent.getItems().isEmpty()) {
+            return ResponseEntity.internalServerError().body(
+                    new ErrorApi(
+                            "500","Error get the item from the stock, try again later"));
+        }
+
+        outboxService.saveOrderEvent(orderCreatedEvent);
+
         return ResponseEntity.ok(orderMapper.toCreateOrderResponse(orderCreatedEvent));
     }
 }

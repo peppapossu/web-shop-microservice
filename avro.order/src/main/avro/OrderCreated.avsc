@@ -11,7 +11,7 @@
     },
     {
       "name": "orderId",
-      "type": "long",
+      "type": "string",
       "doc": "Order identifier"
     },
     {

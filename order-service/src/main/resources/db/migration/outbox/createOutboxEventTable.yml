@@ -1,10 +1,9 @@
 databaseChangeLog:
   - changeSet:
       id: create-outbox-event-table
-      author: you
+      author: ks
       preConditions:
         onFail: MARK_RAN
-        onError: HALT
         not:
           tableExists:
             tableName: outbox_event
@@ -14,7 +13,7 @@ databaseChangeLog:
             tableName: outbox_event
             columns:
               - column:
-                  name: id
+                  name: event_id
                   type: UUID
                   constraints:
                     primaryKey: true
@@ -22,53 +21,43 @@ databaseChangeLog:
 
               - column:
                   name: aggregate_type
-                  type: VARCHAR(50)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
 
               - column:
                   name: aggregate_id
-                  type: BIGINT
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
 
               - column:
                   name: event_type
-                  type: VARCHAR(100)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
 
               - column:
                   name: payload
-                  type: BYTEA
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: payload_type
-                  type: VARCHAR(200)
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: status
-                  type: VARCHAR(20)
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: retry_count
-                  type: INT
-                  defaultValueNumeric: 0
+                  type: JSONB
                   constraints:
                     nullable: false
 
               - column:
                   name: created_at
                   type: TIMESTAMP
-                  constraints:
-                    nullable: false
+                  defaultValueComputed: CURRENT_TIMESTAMP
 
+        - createIndex:
+            tableName: outbox_event
+            indexName: idx_outbox_aggregate_id
+            columns:
               - column:
-                  name: sent_at
-                  type: TIMESTAMP
+                  name: aggregate_id
+
+        - createIndex:
+            tableName: outbox_event
+            indexName: idx_outbox_created_at
+            columns:
+              - column:
+                  name: created_at

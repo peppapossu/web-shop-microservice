@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/migration/order/createOrderTable.yml
+  - include:
+      file: db/migration/inbox/createProcessedEventTable.yml

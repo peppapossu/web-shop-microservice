@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-processed-event-table
+      author: ks
+
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: processed_event
+
+      changes:
+        - createTable:
+            tableName: processed_event
+            columns:
+              - column:
+                  name: event_id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

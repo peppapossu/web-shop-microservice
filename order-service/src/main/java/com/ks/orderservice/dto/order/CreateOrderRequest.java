@@ -9,9 +9,6 @@ public record CreateOrderRequest(
         Long customerId,
 
         @NotBlank
-        Long orderId,
-
-        @NotBlank
         Set<ItemRequest> items
 ) {
 }
