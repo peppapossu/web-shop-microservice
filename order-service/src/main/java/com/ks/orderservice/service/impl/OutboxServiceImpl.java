@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class OutboxServiceImpl implements OutboxService {
         OutboxEvent event = OutboxEvent.builder()
                 .eventId(idGenerator.next())
                 .aggregateType("Order")
-                .aggregateId(UUID.fromString(orderEvent.getOrderId()))
+                .aggregateId(idGenerator.next())
                 .eventType("OrderCreated")
                 .payload(AvroJsonMapper.toJson(orderEvent))
                 .createdAt(Instant.now())

@@ -11,7 +11,10 @@
     },
     {
       "name": "orderId",
-      "type": "string",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
       "doc": "Order identifier"
     },
     {

@@ -21,14 +21,14 @@ spring:
       routes:
 
         - id: auth-service
-          uri: http://${AUTH_SERVICE_URL:auth-service:8080}
+          uri: http://${AUTH_SERVICE_URL}
           predicates:
             - Path=/api/v1/auth/**
 
         - id: order-service
-          uri: http://${ORDER_SERVICE_URL:order-service:8080}
+          uri: http://${ORDER_SERVICE_URL}
           predicates:
-          - Path=/api/v1/orders/**,/api/v1/users/**
+            - Path=/api/v1/orders/**,/api/v1/users/**
 
         - id: inventory-service
           uri: http://inventory-service:8080
@@ -45,6 +45,6 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://${AUTH_SERVICE_URL:auth-service:8080}/api/v1/auth/jwks
+          jwk-set-uri: ${PUBLIC_KEY_URL}
 
 

@@ -28,7 +28,7 @@ public class OrderController {
     private final OrderMapper orderMapper;
     private final OutboxService outboxService;
 
-    private final static String ORDER = "order";
+//    private final static String ORDER = "order";
 
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {

@@ -26,7 +26,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://${AUTH_SERVICE_URL:auth-service:8080}/api/v1/auth/jwks
+          jwk-set-uri: ${PUBLIC_KEY_URL}
 
   # Liquibase
   liquibase:
@@ -79,18 +79,18 @@ resilience4j:
 
 
   # Protection for Kafka producer
-  ratelimiter:
-    instances:
-      kafkaRate:
-        limitForPeriod: 500
-        limitRefreshPeriod: 1s
-
-  thread-pool-bulkhead:
-    instances:
-      kafkaProducer:
-        coreThreadPoolSize: 4
-        maxThreadPoolSize: 8
-        queueCapacity: 100
+#  ratelimiter:
+#    instances:
+#      kafkaRate:
+#        limitForPeriod: 500
+#        limitRefreshPeriod: 1s
+#
+#  thread-pool-bulkhead:
+#    instances:
+#      kafkaProducer:
+#        coreThreadPoolSize: 4
+#        maxThreadPoolSize: 8
+#        queueCapacity: 100
 
 ---
 spring:
