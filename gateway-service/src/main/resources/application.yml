@@ -1,0 +1,50 @@
+server:
+  port: ${SERVER_PORT}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: "classpath:/config/dev.yaml"
+
+---
+spring:
+  application:
+    name: gateway-service
+
+  profiles:
+    active: dev
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: auth-service
+          uri: http://${AUTH_SERVICE_URL:auth-service:8080}
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: order-service
+          uri: http://${ORDER_SERVICE_URL:order-service:8080}
+          predicates:
+          - Path=/api/v1/orders/**,/api/v1/users/**
+
+        - id: inventory-service
+          uri: http://inventory-service:8080
+          predicates:
+            - Path=/api/v1/inventory/**
+
+        - id: notification-service
+          uri: http://notification-service:8080
+          predicates:
+            - Path=/api/v1/notification/**
+
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://${AUTH_SERVICE_URL:auth-service:8080}/api/v1/auth/jwks
+
+

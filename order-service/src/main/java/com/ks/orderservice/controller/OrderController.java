@@ -32,6 +32,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        log.info("createOrderRequest={}", createOrderRequest);
 
         OrderCreatedEvent orderCreatedEvent = orderService.checkAndReserveStock(createOrderRequest);
 

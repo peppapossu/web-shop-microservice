@@ -1,0 +1,52 @@
+server:
+  port: ${SERVER_PORT}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: "classpath:/config/dev.yaml"
+
+---
+spring:
+  profiles:
+    active: dev
+
+  application:
+    name: auth-service
+
+  # DataBase
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${POSTGRES_AUTH_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+
+#  security:
+#    oauth2:
+#      authorizationserver:
+#        issuer: http://localhost:${SERVER_PORT}
+#        issuer: http://auth-service:${SERVER_PORT}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+  # Liquibase
+  liquibase:
+    enabled: true
+    change-log: classpath:db/migration/db.changelog-master.yml
+
+# RSA Public & Private Keys
+jwt:
+  expiration: 900000 #1000*60*15
+  refresh-expiration: 604800000 #1000*60*60*24*7
+  header: Bearer
+  rsa:
+    public-key: ${JWT_PUBLIC_KEY_PATH}
+    private-key: ${JWT_PRIVATE_KEY_PATH}
+    key-id: auth-key-1
