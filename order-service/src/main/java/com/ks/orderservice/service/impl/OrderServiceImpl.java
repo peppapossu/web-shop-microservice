@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
          OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.newBuilder()
                 .setCustomerId(request.customerId())
-                .setOrderId(request.orderId())
+//                .setOrderId(request.orderId())
                 .setItems(items)
                 .build();
 

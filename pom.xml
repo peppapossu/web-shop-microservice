@@ -13,6 +13,8 @@
     </parent>
 
     <modules>
+        <module>gateway-service</module>
+        <module>auth-service</module>
         <module>inventory-service</module>
         <module>notification-service</module>
         <module>order-service</module>
@@ -36,6 +38,8 @@
         <kafka.avro.serializer>7.6.0</kafka.avro.serializer>
         <org.jetbrains.annotations>17.0.0</org.jetbrains.annotations>
         <commons.codec>1.18.0</commons.codec>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <io.jsonwebtoken>0.13.0</io.jsonwebtoken>
     </properties>
 
     <dependencyManagement>
@@ -121,6 +125,14 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons.codec}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
 

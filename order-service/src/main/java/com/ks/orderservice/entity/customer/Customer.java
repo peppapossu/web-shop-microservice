@@ -1,12 +1,8 @@
 package com.ks.orderservice.entity.customer;
 
 
-import com.ks.orderservice.entity.appUser.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -24,7 +20,5 @@ public class Customer {
 
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private AppUser appUser;
+    private Long appUserId;
 }
