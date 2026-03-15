@@ -26,6 +26,7 @@ Reliable event publishing is implemented using the **Outbox Pattern** combined w
 - Spring Web
 - Spring Data
 - Spring Security
+- Spring Cloud
 
 ### Communication
 - gRPC + Protobuf (service-to-service communication)
@@ -50,11 +51,12 @@ Reliable event publishing is implemented using the **Outbox Pattern** combined w
 ## 🔄 Event-Driven Flow
 
 1. Client → API Gateway
-2. Gateway → Service (gRPC)
-3. Service writes domain data + Outbox event in a single transaction
-4. Debezium captures DB changes (CDC)
-5. Event is published to Kafka
-6. Other services consume and react asynchronously
+2. Gateway → Service 
+3. Service → Service (gRPC)
+4. Service writes domain data + Outbox event in a single transaction
+5. Debezium captures DB changes (CDC)
+6. Event is published to Kafka
+7. Other services consume and react asynchronously
 
 ---
 
