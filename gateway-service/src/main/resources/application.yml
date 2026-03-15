@@ -1,14 +1,6 @@
 server:
   port: ${SERVER_PORT}
 
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-    import: "classpath:/config/dev.yaml"
-
----
 spring:
   application:
     name: gateway-service
@@ -48,3 +40,9 @@ spring:
           jwk-set-uri: ${PUBLIC_KEY_URL}
 
 
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: "classpath:/config/dev.yaml"
