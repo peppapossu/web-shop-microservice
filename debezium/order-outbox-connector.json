@@ -3,24 +3,33 @@
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 
-    "database.hostname": "postgres",
+    "database.hostname": "order_db",
     "database.port": "5432",
     "database.user": "postgres",
     "database.password": "postgres",
-    "database.dbname": "order_db",
+    "database.dbname": "postgres",
+    "database.server.name": "orders_db",
 
     "plugin.name": "pgoutput",
     "slot.name": "outbox_slot",
+
+    "topic.prefix": "orders",
 
     "table.include.list": "public.outbox_event",
 
     "tombstones.on.delete": "false",
 
+
+
     "transforms": "outbox",
     "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
-    "transforms.outbox.table.field.event.id": "id",
-    "transforms.outbox.table.field.event.key": "aggregate_id",
-    "transforms.outbox.table.fields.additional.placement": "type:header:eventType",
+    "transforms.outbox.table.field.event.type": "event_type",
+    "transforms.outbox.table.field.aggregate.id": "aggregate_id",
+    "transforms.outbox.table.field.aggregate.type": "aggregate_type",
+    "transforms.outbox.table.field.event.id": "event_id",
+    "transforms.outbox.table.field.event.key": "event_id",
+    "transforms.outbox.table.field.event.payload": "payload",
+    "transforms.outbox.table.fields.additional.placement": "event_type:header:eventType",
     "transforms.outbox.route.by.field": "event_type",
     "transforms.outbox.route.topic.replacement": "${routedByValue}",
 
@@ -28,10 +37,15 @@
 
     "value.converter": "io.confluent.connect.avro.AvroConverter",
     "value.converter.schema.registry.url": "http://schema-registry:8081",
-    "value.converter.auto.register.schemas": "true",
+    "value.converter.auto.register.schemas": "false",
     "value.converter.use.latest.version": "true",
+    "value.converter.schemas.enable": "true",
 
-    "publication.autocreate.mode": "filtered"
+    "publication.autocreate.mode": "filtered",
+    "errors.tolerance": "all",
+    "errors.deadletterqueue.topic.name": "orders-outbox.DLT",
+    "errors.deadletterqueue.context.headers.enable": "true",
+    "errors.log.enable": "true"
   }
 }
 

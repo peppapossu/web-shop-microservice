@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -22,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByCustomerId(id, pageable);
     }
 
-    public Page<Order> getOrdersByOrderId(Long id, Pageable pageable) {
+    public Page<Order> getOrdersByOrderId(UUID id, Pageable pageable) {
         return orderRepository.findByOrderId(id, pageable);
     }
 
@@ -30,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll(pageable);
     }
 
-    public boolean isOrderExists(Long orderId) {
+    public boolean isOrderExists(UUID orderId) {
         return orderRepository.existsByOrderId(orderId);
     }
 

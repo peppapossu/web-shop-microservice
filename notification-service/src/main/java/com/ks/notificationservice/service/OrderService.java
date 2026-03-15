@@ -5,6 +5,8 @@ import com.ks.notificationservice.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 
 public interface OrderService {
 
@@ -12,9 +14,9 @@ public interface OrderService {
 
     Page<Order> getOrdersByCustomerId(Long id, Pageable pageable);
 
-    Page<Order> getOrdersByOrderId(Long id, Pageable pageable);
+    Page<Order> getOrdersByOrderId(UUID id, Pageable pageable);
 
     Page<Order> getAllOrders(Pageable pageable);
 
-    boolean isOrderExists(Long orderId);
+    boolean isOrderExists(UUID orderId);
 }

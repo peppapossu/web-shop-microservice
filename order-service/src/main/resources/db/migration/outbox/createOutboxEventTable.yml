@@ -39,7 +39,7 @@ databaseChangeLog:
 
               - column:
                   name: payload
-                  type: JSONB
+                  type: BYTEA
                   constraints:
                     nullable: false
 

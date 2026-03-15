@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
@@ -44,7 +46,7 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public ResponseEntity<PagedResponse<OrderResponse>> getAllOrdersByOrderId(
-            @PathVariable Long orderId,
+            @PathVariable UUID orderId,
             @PageableDefault(size = 20, sort = "orderId", direction = Sort.Direction.ASC) Pageable pageable) {
 
         return ResponseEntity.ok(PagedResponseMapper.map(

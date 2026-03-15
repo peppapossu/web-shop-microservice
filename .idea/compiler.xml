@@ -5,6 +5,11 @@
       <directory url="file://$PROJECT_DIR$/common.proto/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
       <profile name="Annotation profile for web-shop" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -15,25 +20,105 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
-        <module name="auth-service" />
-        <module name="inventory-service" />
-        <module name="gateway-service" />
-        <module name="avro-order" />
-        <module name="common-proto" />
-        <module name="order-service" />
-        <module name="notification-service" />
+        <module name="gateway-service (3)" />
+        <module name="common-proto (1)" />
+        <module name="notification-service (3)" />
+        <module name="order-service (4)" />
+        <module name="auth-service (3)" />
+        <module name="inventory-service (3)" />
+        <module name="avro-order (3)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="auth-service" target="21" />
+      <module name="auth-service (1)" target="1.5" />
+      <module name="auth-service (2)" target="21" />
+      <module name="auth-service (4)" target="21" />
+      <module name="auth-service (5)" target="21" />
+      <module name="avro-order" target="21" />
+      <module name="avro-order (1)" target="21" />
+      <module name="avro-order (2)" target="1.5" />
+      <module name="avro-order (4)" target="21" />
+      <module name="avro-order (5)" target="21" />
+      <module name="common-proto" target="21" />
+      <module name="common-proto (2)" target="1.5" />
+      <module name="common-proto (3)" target="21" />
+      <module name="common-proto (4)" target="21" />
+      <module name="common-proto (5)" target="21" />
+      <module name="gateway-service" target="21" />
+      <module name="gateway-service (1)" target="1.5" />
+      <module name="gateway-service (2)" target="21" />
+      <module name="gateway-service (4)" target="21" />
+      <module name="gateway-service (5)" target="21" />
+      <module name="inventory-service" target="21" />
+      <module name="inventory-service (1)" target="21" />
+      <module name="inventory-service (2)" target="1.5" />
+      <module name="inventory-service (4)" target="21" />
+      <module name="inventory-service (5)" target="21" />
+      <module name="notification-service" target="21" />
+      <module name="notification-service (1)" target="1.5" />
+      <module name="notification-service (2)" target="1.5" />
+      <module name="notification-service (4)" target="21" />
+      <module name="notification-service (5)" target="21" />
+      <module name="notification-service (6)" target="21" />
+      <module name="order-service" target="21" />
+      <module name="order-service (1)" target="21" />
+      <module name="order-service (2)" target="21" />
+      <module name="order-service (3)" target="1.5" />
+      <module name="order-service (5)" target="21" />
+      <module name="web-shop" target="1.5" />
+      <module name="web-shop (2)" target="1.5" />
+      <module name="web-shop (3)" target="1.5" />
+      <module name="web-shop (4)" target="1.5" />
+      <module name="web-shop (5)" target="1.5" />
+      <module name="web_shop" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth-service" options="-parameters" />
+      <module name="auth-service (1)" options="" />
+      <module name="auth-service (2)" options="-parameters" />
+      <module name="auth-service (3)" options="-parameters" />
+      <module name="auth-service (4)" options="-parameters" />
+      <module name="auth-service (5)" options="-parameters" />
       <module name="avro-order" options="-parameters" />
+      <module name="avro-order (1)" options="-parameters" />
+      <module name="avro-order (2)" options="" />
+      <module name="avro-order (3)" options="-parameters" />
+      <module name="avro-order (4)" options="-parameters" />
+      <module name="avro-order (5)" options="-parameters" />
       <module name="common-proto" options="-parameters" />
+      <module name="common-proto (1)" options="-parameters" />
+      <module name="common-proto (2)" options="" />
+      <module name="common-proto (3)" options="-parameters" />
+      <module name="common-proto (4)" options="-parameters" />
+      <module name="common-proto (5)" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
+      <module name="gateway-service (1)" options="" />
+      <module name="gateway-service (2)" options="-parameters" />
+      <module name="gateway-service (3)" options="-parameters" />
+      <module name="gateway-service (4)" options="-parameters" />
+      <module name="gateway-service (5)" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
+      <module name="inventory-service (1)" options="-parameters" />
+      <module name="inventory-service (2)" options="" />
+      <module name="inventory-service (3)" options="-parameters" />
+      <module name="inventory-service (4)" options="-parameters" />
+      <module name="inventory-service (5)" options="-parameters" />
       <module name="notification-service" options="-parameters" />
+      <module name="notification-service (1)" options="" />
+      <module name="notification-service (2)" options="" />
+      <module name="notification-service (3)" options="-parameters" />
+      <module name="notification-service (4)" options="-parameters" />
+      <module name="notification-service (5)" options="-parameters" />
+      <module name="notification-service (6)" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="order-service (1)" options="-parameters" />
+      <module name="order-service (2)" options="-parameters" />
+      <module name="order-service (3)" options="" />
+      <module name="order-service (4)" options="-parameters" />
+      <module name="order-service (5)" options="-parameters" />
     </option>
   </component>
 </project>

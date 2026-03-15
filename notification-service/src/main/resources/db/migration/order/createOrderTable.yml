@@ -24,7 +24,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: order_id
-                  type: BIGINT
+                  type: uuid
                   constraints:
                     nullable: false
 

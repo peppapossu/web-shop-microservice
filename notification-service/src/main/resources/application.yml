@@ -1,7 +1,17 @@
 server:
   port: ${SERVER_PORT}
 
+---
 spring:
+  config:
+    activate:
+      on-profile: dev
+    import: "classpath:/config/dev.yml"
+
+---
+spring:
+  profiles:
+    active: dev
 
   # DataBase
   datasource:
@@ -21,7 +31,7 @@ spring:
     bootstrap-servers: ${KAFKA}
     consumer:
       group-id: order-id
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       enable-auto-commit: false

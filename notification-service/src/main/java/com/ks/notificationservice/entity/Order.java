@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 
 @Entity
@@ -22,7 +23,7 @@ public class Order {
     private Long id;
 
     @Column(nullable = false, name = "order_id")
-    private Long orderId;
+    private UUID orderId;
 
     @Column(nullable = false, name = "product_id")
     private Long productId;

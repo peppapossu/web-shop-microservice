@@ -40,6 +40,8 @@
         <commons.codec>1.18.0</commons.codec>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <io.jsonwebtoken>0.13.0</io.jsonwebtoken>
+        <org.testcontainers>1.21.3</org.testcontainers>
+        <resilience4j.spring.boot3>2.2.0</resilience4j.spring.boot3>
     </properties>
 
     <dependencyManagement>

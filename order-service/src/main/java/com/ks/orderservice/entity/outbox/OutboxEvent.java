@@ -2,6 +2,8 @@ package com.ks.orderservice.entity.outbox;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -27,8 +29,9 @@ public class OutboxEvent {
     @Column(name = "aggregate_type", nullable = false)
     private String aggregateType;
 
-    @Column(name = "payload", nullable = false, columnDefinition = "jsonb")
-    private String payload;
+    @JdbcTypeCode(SqlTypes.BINARY)
+    @Column(name = "payload", nullable = false)
+    private byte[] payload;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt = Instant.now();
