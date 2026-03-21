@@ -5,7 +5,7 @@ spring:
   profiles:
     active: dev
 
-# DataBase
+  # DataBase
   datasource:
     driverClassName: org.postgresql.Driver
     url: ${POSTGRES_NOT_URL}
@@ -18,22 +18,24 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
 
-# Kafka
+  # Kafka
   kafka:
     bootstrap-servers: ${KAFKA}
     consumer:
       group-id: order-id
       auto-offset-reset: latest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       enable-auto-commit: false
       properties:
-        schema.registry.url: ${SCHEMA_REGISTRY}
-        specific.avro.reader: true
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.apache.kafka.common.serialization.ByteArrayDeserializer
+#        schema.registry.url: ${SCHEMA_REGISTRY}
+#        specific.avro.reader: true
     listener:
-      ack-mode: manual_immediate
+      ack-mode: manual
 
-# Liquibase
+  # Liquibase
   liquibase:
     enabled: true
     change-log: classpath:db/migration/db.changelog-master.yml

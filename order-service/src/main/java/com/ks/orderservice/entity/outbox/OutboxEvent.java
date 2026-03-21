@@ -36,4 +36,7 @@ public class OutboxEvent {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt = Instant.now();
 
+    @Column(name = "schema_version", nullable = false)
+    private Integer schemaVersion;
+
 }

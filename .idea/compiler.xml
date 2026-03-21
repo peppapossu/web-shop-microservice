@@ -17,23 +17,38 @@
         </processorPath>
         <module name="auth-service" />
         <module name="inventory-service" />
+        <module name="common-proto (1)" />
         <module name="gateway-service" />
         <module name="avro-order" />
+        <module name="notification-service (3)" />
         <module name="common-proto" />
+        <module name="order-service (4)" />
         <module name="order-service" />
+        <module name="inventory-service (3)" />
+        <module name="avro-order (3)" />
         <module name="notification-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="auth-service (3)" target="21" />
+      <module name="gateway-service (3)" target="21" />
+      <module name="web-shop (1)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth-service" options="-parameters" />
       <module name="avro-order" options="-parameters" />
+      <module name="avro-order (3)" options="-parameters" />
       <module name="common-proto" options="-parameters" />
+      <module name="common-proto (1)" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
+      <module name="inventory-service (3)" options="-parameters" />
       <module name="notification-service" options="-parameters" />
+      <module name="notification-service (3)" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="order-service (4)" options="-parameters" />
     </option>
   </component>
 </project>

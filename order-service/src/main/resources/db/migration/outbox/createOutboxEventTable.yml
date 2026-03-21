@@ -47,6 +47,9 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: schema_version
+                  type: INT2
 
         - createIndex:
             tableName: outbox_event

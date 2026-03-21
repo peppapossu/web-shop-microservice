@@ -17,6 +17,7 @@ import java.time.Instant;
 public class OutboxServiceImpl implements OutboxService {
 
     private final static String ORDER_CREATED = "OrderCreated";
+    private final static String ORDER = "Order";
 
     private final OutboxRepository repository;
     private final IdGenerator idGenerator;
@@ -24,14 +25,14 @@ public class OutboxServiceImpl implements OutboxService {
     @Transactional
     public void saveOrderEvent(OrderCreatedEvent orderEvent) {
 
-
         OutboxEvent event = OutboxEvent.builder()
                 .eventId(idGenerator.next())
-                .aggregateType("Order")
+                .aggregateType(ORDER)
                 .aggregateId(idGenerator.next())
                 .eventType(ORDER_CREATED)
                 .payload(AvroSerializer.serialize(orderEvent))
                 .createdAt(Instant.now())
+                .schemaVersion(1)
                 .build();
 
         repository.save(event);
