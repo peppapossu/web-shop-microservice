@@ -5,7 +5,7 @@ import com.ks.avro.order.OrderCreatedEvent;
 import com.ks.common.proto.ProductResponse;
 import com.ks.orderservice.dto.order.CreateOrderRequest;
 import com.ks.orderservice.dto.order.item.ItemRequest;
-import com.ks.orderservice.entity.id.IdGenerator;
+import com.ks.orderservice.entity.id.UUIDGenerator;
 import com.ks.orderservice.grpc.ProductClient;
 import com.ks.orderservice.mapper.AvroMapper;
 import com.ks.orderservice.service.OrderService;
@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final ProductClient productClient;
     private final AvroMapper itemMapper;
-    private final IdGenerator idGenerator;
+    private final UUIDGenerator uuidGenerator;
 
     public OrderCreatedEvent checkAndReserveStock(CreateOrderRequest request) {
 
@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
 
         return OrderCreatedEvent.newBuilder()
                 .setCustomerId(request.customerId())
-                .setOrderId(idGenerator.next())
+                .setOrderId(uuidGenerator.next())
                 .setItems(items)
                 .build();
     }

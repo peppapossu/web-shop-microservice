@@ -9,7 +9,7 @@ services:
       - auth-service
       - order-service
       - inventory-service
-#      - notification-service
+      - notification-service
     ports:
       - "8080:8080"
     working_dir: /app
@@ -93,16 +93,15 @@ services:
       - .env.docker
     environment:
       KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://${KAFKA_BOOTSTRAP_SERVERS_INTERNAL},EXTERNAL://${KAFKA_BOOTSTRAP_SERVERS_EXTERNAL}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
-#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA}
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     healthcheck:
-      test: [ "CMD-SHELL", "kafka-broker-api-versions --bootstrap-server ${KAFKA}" ]
+      test: [ "CMD-SHELL", "kafka-broker-api-versions --bootstrap-server ${KAFKA_BOOTSTRAP_SERVERS_INTERNAL}" ]
       interval: 5s
       retries: 5
     volumes:
@@ -119,7 +118,7 @@ services:
     environment:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://${KAFKA}
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://${KAFKA_BOOTSTRAP_SERVERS_INTERNAL}
 
   kafka-connect:
     build:
@@ -130,7 +129,7 @@ services:
     environment:
 
       CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
-      CONNECT_BOOTSTRAP_SERVERS: kafka:29092
+      CONNECT_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS_INTERNAL}
       CONNECT_GROUP_ID: connect-cluster
 
       CONNECT_CONFIG_STORAGE_TOPIC: connect_configs
@@ -143,8 +142,8 @@ services:
 
       CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.converters.ByteArrayConverter
-#      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-#      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      #      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      #      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
 
       CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
 
@@ -192,8 +191,6 @@ services:
     image: postgres:16
     container_name: order_db
     restart: unless-stopped
-    ports:
-    - "5432:5432"
     command:
       - "postgres"
       - "-c"
@@ -234,8 +231,6 @@ services:
     image: postgres:16
     container_name: notification_db
     restart: unless-stopped
-    ports:
-      - "5434:5432"
     env_file:
       - .env.docker
     environment:
@@ -255,8 +250,7 @@ services:
       - "8090:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
-#      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: ${KAFKA_BOOTSTRAP_SERVERS_INTERNAL}
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
     depends_on:
       - kafka

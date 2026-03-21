@@ -21,14 +21,10 @@
 
     "transforms": "outbox",
     "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
-    "transforms.outbox.table.field.event.type": "event_type",
-    "transforms.outbox.table.field.aggregate.id": "aggregate_id",
-    "transforms.outbox.table.field.aggregate.type": "aggregate_type",
-    "transforms.outbox.table.field.event.id": "event_id",
-    "transforms.outbox.table.field.event.key": "event_id",
-    "transforms.outbox.table.field.event.payload": "payload",
-    "transforms.outbox.table.fields.additional.placement": "event_type:header:eventType",
-    "transforms.outbox.route.by.field": "event_type",
+    "transforms.outbox.route.by.field": "aggregate_type",
+    "transforms.outbox.key.field" : "aggregate_id",
+    "transforms.outbox.value.field" : "payload",
+    "transforms.outbox.header.fields" : "event_type, schema_version, created_at",
     "transforms.outbox.route.topic.replacement": "${routedByValue}",
     "transforms.outbox.payload.type": "bytes",
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class UuidV7Generator implements IdGenerator {
+public class UuidV7Generator implements UUIDGenerator {
 
     public UUID next() {
         return UuidCreator.getTimeOrderedEpoch();

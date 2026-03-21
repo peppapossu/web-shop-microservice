@@ -2,7 +2,7 @@ package com.ks.orderservice.entity.id;
 
 import java.util.UUID;
 
-public interface IdGenerator {
+public interface UUIDGenerator {
 
     UUID next();
 }

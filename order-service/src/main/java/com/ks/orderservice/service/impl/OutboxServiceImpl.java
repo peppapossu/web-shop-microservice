@@ -1,7 +1,7 @@
 package com.ks.orderservice.service.impl;
 
 import com.ks.avro.order.OrderCreatedEvent;
-import com.ks.orderservice.entity.id.IdGenerator;
+import com.ks.orderservice.entity.id.UUIDGenerator;
 import com.ks.orderservice.entity.outbox.OutboxEvent;
 import com.ks.orderservice.mapper.AvroSerializer;
 import com.ks.orderservice.repository.OutboxRepository;
@@ -18,21 +18,22 @@ public class OutboxServiceImpl implements OutboxService {
 
     private final static String ORDER_CREATED = "OrderCreated";
     private final static String ORDER = "Order";
+    private final int SCHEMA_VERSION = 1;
 
     private final OutboxRepository repository;
-    private final IdGenerator idGenerator;
+    private final UUIDGenerator uuidGenerator;
 
     @Transactional
     public void saveOrderEvent(OrderCreatedEvent orderEvent) {
 
         OutboxEvent event = OutboxEvent.builder()
-                .eventId(idGenerator.next())
+                .eventId(uuidGenerator.next())
                 .aggregateType(ORDER)
-                .aggregateId(idGenerator.next())
+                .aggregateId(uuidGenerator.next())
                 .eventType(ORDER_CREATED)
                 .payload(AvroSerializer.serialize(orderEvent))
                 .createdAt(Instant.now())
-                .schemaVersion(1)
+                .schemaVersion(SCHEMA_VERSION)
                 .build();
 
         repository.save(event);
