@@ -27,7 +27,7 @@ databaseChangeLog:
 
               - column:
                   name: aggregate_id
-                  type: VARCHAR(255)
+                  type: UUID
                   constraints:
                     nullable: false
 
@@ -50,7 +50,7 @@ databaseChangeLog:
 
               - column:
                   name: schema_version
-                  type: INT2
+                  type: INTEGER
 
         - createIndex:
             tableName: outbox_event

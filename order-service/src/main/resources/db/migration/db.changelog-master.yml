@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: db/migration/customer/createCustomerTable.yml
+      file: db/migration/init/000-create-schema-orders.yml
   - include:
       file: db/migration/outbox/000-create-outbox-event-table.yml
   - include:
