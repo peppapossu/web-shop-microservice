@@ -37,7 +37,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${PUBLIC_KEY_URL}
+          issuer-uri: ${PUBLIC_KEY_URL}
+#          jwk-set-uri: ${PUBLIC_KEY_URL}
 
 
 ---
