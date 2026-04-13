@@ -1,6 +1,7 @@
 {
   "name": "order-outbox-connector",
   "config": {
+
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 
     "database.hostname": "order_db",
@@ -10,30 +11,27 @@
     "database.dbname": "postgres",
     "database.server.name": "orders_db",
 
+    "tombstones.on.delete": "false",
+
     "plugin.name": "pgoutput",
     "slot.name": "outbox_slot",
-
-    "topic.prefix": "orders",
-
     "table.include.list": "public.outbox_event",
 
-    "tombstones.on.delete": "false",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+    "binary.handling.mode": "bytes",
+    "topic.prefix": "orders",
 
     "transforms": "outbox",
     "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
-    "transforms.outbox.route.by.field": "aggregate_type",
     "transforms.outbox.key.field" : "aggregate_id",
     "transforms.outbox.value.field" : "payload",
     "transforms.outbox.header.fields" : "event_type, schema_version, created_at",
+
+    "transforms.outbox.route.by.field": "aggregate_type",
     "transforms.outbox.route.topic.replacement": "${routedByValue}",
-    "transforms.outbox.payload.type": "bytes",
 
-    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter" : "org.apache.kafka.connect.converters.ByteArrayConverter",
-
-    "binary.handling.mode": "bytes",
     "snapshot.mode": "initial",
-
 
     "publication.autocreate.mode": "filtered",
 
