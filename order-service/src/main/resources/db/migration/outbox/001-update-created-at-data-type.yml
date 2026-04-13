@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-update-created-at-data-type
+      author: ks
+      changes:
+
+        - modifyDataType:
+            tableName: outbox_event
+            columnName: created_at
+            newDataType: timestamptz
+
+        - dropDefaultValue:
+            tableName: outbox_event
+            columnName: created_at

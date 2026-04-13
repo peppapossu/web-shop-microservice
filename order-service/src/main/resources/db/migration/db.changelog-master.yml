@@ -2,4 +2,8 @@ databaseChangeLog:
   - include:
       file: db/migration/customer/createCustomerTable.yml
   - include:
-      file: db/migration/outbox/createOutboxEventTable.yml
+      file: db/migration/outbox/000-create-outbox-event-table.yml
+  - include:
+      file: db/migration/outbox/001-update-created-at-data-type.yml
+  - include:
+      file: db/migration/outbox/002-update-schema-version-add-constraints.yml

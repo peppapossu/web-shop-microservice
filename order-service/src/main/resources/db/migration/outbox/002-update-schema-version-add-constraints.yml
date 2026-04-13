@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-update-schema-version-add-constrains
+      author: ks
+
+      update:
+        tableName: outbox_event
+        columns:
+         - column:
+             name: schema_version
+             value: 1
+             where: status IS NULL
+
+
+      changes:
+        - addNotNullConstraints:
+            tableName: outbox_event
+            columnName: schema_version
