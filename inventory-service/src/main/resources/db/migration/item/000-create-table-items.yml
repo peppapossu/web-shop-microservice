@@ -1,21 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: create-item-table
+      id: 000-create-table-items
       author: ks
 
       preConditions:
-
         onFail: MARK_RAN
         onError: HALT
-
         not:
           tableExists:
-            tableName: item
-
+            tableName: items
 
       changes:
         - createTable:
-            tableName: item
+            tableName: items
             columns:
               - column:
                   name: id

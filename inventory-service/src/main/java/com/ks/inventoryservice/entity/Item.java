@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "items")
 public class Item {
 
     @Id

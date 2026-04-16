@@ -215,6 +215,8 @@ services:
     image: postgres:16
     container_name: inventory_db
     restart: unless-stopped
+    ports:
+      - "5433:5432"
     env_file:
       - .env.docker
     environment:

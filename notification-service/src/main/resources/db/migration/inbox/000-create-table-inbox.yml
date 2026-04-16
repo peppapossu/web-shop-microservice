@@ -1,17 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: create-processed-event-table
+      id: 000-create-table-inbox
       author: ks
+
       preConditions:
         onFail: MARK_RAN
-        onError: HALT
         not:
           tableExists:
-            tableName: processed_event
+            tableName: inbox
 
       changes:
         - createTable:
-            tableName: processed_event
+            tableName: inbox
             columns:
               - column:
                   name: event_id
@@ -21,7 +21,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: processed_at
+                  name: created_at
                   type: TIMESTAMP
                   constraints:
                     nullable: false
