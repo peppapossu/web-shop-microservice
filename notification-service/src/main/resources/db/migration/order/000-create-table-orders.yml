@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-orders-table
+      id: 000-create-table-orders
       author: ks
 
       preConditions:
