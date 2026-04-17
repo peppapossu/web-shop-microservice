@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db/migration/order/createOrderTable.yml
+      file: db/migration/init/000-create-schema-notifications.yml
   - include:
-      file: db/migration/inbox/createProcessedEventTable.yml
+      file: db/migration/order/000-create-table-orders.yml
+  - include:
+      file: db/migration/inbox/000-create-table-inbox.yml

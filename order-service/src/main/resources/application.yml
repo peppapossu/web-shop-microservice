@@ -24,8 +24,6 @@ spring:
         default_schema: orders
         hbm2ddl:
           auto: validate
-    open-in-view: false
-
 
   security:
     oauth2:

@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InboxEvent {
+public class Inbox{
 
     @Id
     private UUID eventId;

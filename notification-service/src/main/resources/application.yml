@@ -17,6 +17,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
+        default_schema: notifications
+        hbm2ddl:
+          auto: validate
 
   # Kafka
   kafka:
@@ -30,8 +33,6 @@ spring:
       properties:
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.apache.kafka.common.serialization.ByteArrayDeserializer
-#        schema.registry.url: ${SCHEMA_REGISTRY}
-#        specific.avro.reader: true
     listener:
       ack-mode: manual
 
@@ -39,6 +40,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/migration/db.changelog-master.yml
+    default-schema: notifications
+    liquibase-schema: public
 
 
 ---
