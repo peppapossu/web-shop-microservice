@@ -40,6 +40,10 @@ spring:
     default-schema: orders
     liquibase-schema: public
 
+  mvc:
+    problemdetails:
+      enabled: true
+
 grpc:
   client:
     inventory-service:

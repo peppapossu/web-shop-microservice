@@ -1,8 +1,8 @@
 package com.ks.orderservice.controller;
 
 import com.ks.avro.order.OrderCreatedEvent;
-import com.ks.orderservice.dto.ErrorApi;
 import com.ks.orderservice.dto.order.CreateOrderRequest;
+import com.ks.orderservice.exception.InventoryServiceException;
 import com.ks.orderservice.mapper.OrderMapper;
 import com.ks.orderservice.service.OrderService;
 import com.ks.orderservice.service.OutboxService;
@@ -37,9 +37,7 @@ public class OrderController {
         OrderCreatedEvent orderCreatedEvent = orderService.checkAndReserveStock(createOrderRequest);
 
         if (orderCreatedEvent.getItems().isEmpty()) {
-            return ResponseEntity.internalServerError().body(
-                    new ErrorApi(
-                            "500","Error get the item from the stock, try again later"));
+            throw new InventoryServiceException("Items not found or problem with Inventory service");
         }
 
         outboxService.saveOrderEvent(orderCreatedEvent);
