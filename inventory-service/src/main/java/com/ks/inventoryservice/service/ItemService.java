@@ -1,18 +1,23 @@
 package com.ks.inventoryservice.service;
 
-import com.ks.inventoryservice.entity.Item;
+import com.ks.inventoryservice.dto.item.ItemResponse;
+import com.ks.inventoryservice.domain.Item;
+import com.ks.items.v1.ReserveItemResponse;
+import com.ks.items.v1.ReserveRequest;
 
 import java.util.List;
 
 public interface ItemService {
 
-    List<Item> getAllItems();
+    List<ItemResponse> findAll();
 
-    Item getItemById(Long itemId);
+    ItemResponse findById(Long itemId);
 
-    Item saveItem(Item item);
+    ItemResponse save(Item item);
 
-    Item updateItem(Item item);
+    ItemResponse update(Long id, Item item);
 
-    void deleteItem(Long itemId);
+    void delete(Long itemId);
+
+    List<ReserveItemResponse> checkAndReserve(ReserveRequest request);
 }

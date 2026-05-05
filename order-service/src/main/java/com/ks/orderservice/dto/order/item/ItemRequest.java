@@ -7,10 +7,10 @@ import jakarta.validation.constraints.Positive;
 public record ItemRequest(
 
         @NotBlank
-        Long itemId,
+        Long id,
 
         @Positive
-        int quantity
+        Integer quantity
 
 ) {
 }

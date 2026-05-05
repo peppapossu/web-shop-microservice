@@ -1,6 +1,8 @@
 databaseChangeLog:
   - include:
-      file: db/migration/init/000-create-schema-inventory.yml
+      file: db/migration/init/000-create-schema-inventory.sql
   - include:
-      file: db/migration/item/000-create-table-items.yml
+      file: db/migration/item/001-create-table-items.sql
+  - include:
+      file: db/migration/inbox/001-create-inbox-table.sql
 

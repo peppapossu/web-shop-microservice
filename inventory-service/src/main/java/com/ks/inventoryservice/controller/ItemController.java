@@ -21,42 +21,36 @@ public class ItemController {
     private final ItemMapper itemMapper;
 
     @GetMapping
-    public ResponseEntity<List<ItemResponse>> getItems() {
+    public ResponseEntity<List<ItemResponse>> getAllItems() {
         return ResponseEntity.ok().body(
-                itemMapper.itemsToItemsResponse(
-                        itemService.getAllItems()
-                )
+                        itemService.findAll()
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ItemResponse> getItemById(@PathVariable Long id) {
         return ResponseEntity.ok().body(
-                itemMapper.itemToItemResponse(
-                        itemService.getItemById(id)
-                )
+                        itemService.findById(id)
         );
     }
 
     @PostMapping
-    public ResponseEntity<?> createItem(@RequestBody CreateItemRequest createItemRequest) {
-        itemService.saveItem(
-                itemMapper.createItemRequestToItem(createItemRequest)
-        );
+    public ResponseEntity<?> addNewItem(@RequestBody CreateItemRequest createItemRequest) {
+        itemService.save(itemMapper.toItem(createItemRequest));
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/{id}")
     public ResponseEntity<?> updateItem(@PathVariable Long id, @RequestBody UpdateItemRequest updateItemRequest) {
-        itemService.updateItem(
-                itemMapper.updateItemRequestToItem(updateItemRequest)
-        );
+        itemService.update(id, itemMapper.toItem(updateItemRequest));
+
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteItem(@PathVariable Long id) {
-        itemService.deleteItem(id);
-        return ResponseEntity.ok().build();
+        itemService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

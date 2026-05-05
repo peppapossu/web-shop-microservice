@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public record CreateOrderResponse(
-        UUID orderId,
-        Long customerId,
+        UUID orderUUID,
+        UUID customerUUID,
         List<ItemResponse> items
 ) {
 }
