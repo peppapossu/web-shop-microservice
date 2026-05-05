@@ -1,9 +1,13 @@
 databaseChangeLog:
   - include:
-      file: db/migration/init/000-create-schema-orders.yml
+      file: db/migration/init/000-create-schema-orders.sql
   - include:
-      file: db/migration/outbox/000-create-outbox-event-table.yml
+      file: db/migration/outbox/000-create-outbox-order-table.sql
   - include:
-      file: db/migration/outbox/001-update-created-at-data-type.yml
+      file: db/migration/outbox/001-update-created-at-data-type.sql
   - include:
-      file: db/migration/outbox/002-update-schema-version-add-constraints.yml
+      file: db/migration/outbox/002-update-schema-version-add-constraints.sql
+  - include:
+      file: db/migration/orders/000-create-orders-table.sql
+  - include:
+      file: db/migration/orders/001-create-items-table.sql

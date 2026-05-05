@@ -3,7 +3,7 @@ package com.ks.inventoryservice.mapper;
 import com.ks.inventoryservice.dto.item.CreateItemRequest;
 import com.ks.inventoryservice.dto.item.ItemResponse;
 import com.ks.inventoryservice.dto.item.UpdateItemRequest;
-import com.ks.inventoryservice.entity.Item;
+import com.ks.inventoryservice.domain.Item;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
 
-    ItemResponse itemToItemResponse(Item item);
+    ItemResponse toItemResponse(Item item);
 
-    List<ItemResponse> itemsToItemsResponse(List<Item> items);
+    List<ItemResponse> toItemsResponse(List<Item> items);
 
-    Item createItemRequestToItem(CreateItemRequest createItemRequest);
+    Item toItem(CreateItemRequest createItemRequest);
 
-    Item updateItemRequestToItem(UpdateItemRequest updateItemRequest);
+    Item toItem(UpdateItemRequest updateItemRequest);
 
 }

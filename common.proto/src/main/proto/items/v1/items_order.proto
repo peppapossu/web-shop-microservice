@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package com.ks.items.v1;
+
+option java_multiple_files = true;
+option java_package = "com.ks.items.v1";
+
+service ItemsInventoryService {
+  rpc reserveItems (ReserveRequest) returns (ReserveResponse);
+}
+
+message ReserveRequest {
+  string id = 1;
+  repeated ReserveItemRequest items = 2;
+}
+
+message ReserveItemRequest {
+  int64 id = 1;
+  int32 quantity = 2;
+}
+
+message ReserveResponse {
+  repeated ReserveItemResponse itemResponse = 1;
+  ReserveStatus status = 2;
+  string errorMessage = 3;
+}
+
+enum ReserveStatus {
+  SUCCESS = 0;
+  PARTIAL = 1;
+  FAILED = 2;
+}
+
+message ReserveItemResponse {
+  int64 id = 1;
+  string name = 2;
+  int32 reserved = 3;
+  Money price = 4;
+  int32 discount = 5;
+
+  Availability availability = 6;
+  bool degraded = 7;
+}
+
+message Money {
+  int64 amount = 1;
+  int32 scale = 2;
+}
+
+enum Availability {
+  AVAILABLE = 0;
+  UNAVAILABLE = 1;
+  UNKNOWN = 2;
+}

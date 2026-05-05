@@ -2,13 +2,15 @@ package com.ks.orderservice.dto.order;
 
 import com.ks.orderservice.dto.order.item.ItemRequest;
 import jakarta.validation.constraints.NotBlank;
-import java.util.Set;
+
+import java.util.List;
+import java.util.UUID;
 
 public record CreateOrderRequest(
         @NotBlank
-        Long customerId,
+        UUID customerUUID,
 
         @NotBlank
-        Set<ItemRequest> items
+        List<ItemRequest> items
 ) {
 }

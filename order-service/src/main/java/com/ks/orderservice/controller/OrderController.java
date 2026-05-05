@@ -1,11 +1,8 @@
 package com.ks.orderservice.controller;
 
-import com.ks.avro.order.OrderCreatedEvent;
 import com.ks.orderservice.dto.order.CreateOrderRequest;
-import com.ks.orderservice.exception.InventoryServiceException;
-import com.ks.orderservice.mapper.OrderMapper;
-import com.ks.orderservice.service.OrderService;
-import com.ks.orderservice.service.OutboxService;
+import com.ks.orderservice.dto.order.CreateOrderResponse;
+import com.ks.orderservice.facade.OrderFacadeService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,24 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasRole('USER')")
 public class OrderController {
 
-    private final OrderService orderService;
-    private final OrderMapper orderMapper;
-    private final OutboxService outboxService;
-
-//    private final static String ORDER = "order";
+    private final OrderFacadeService orderFacadeService;
 
     @PostMapping
-    public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
-        log.info("createOrderRequest={}", createOrderRequest);
-
-        OrderCreatedEvent orderCreatedEvent = orderService.checkAndReserveStock(createOrderRequest);
-
-        if (orderCreatedEvent.getItems().isEmpty()) {
-            throw new InventoryServiceException("Items not found or problem with Inventory service");
-        }
-
-        outboxService.saveOrderEvent(orderCreatedEvent);
-
-        return ResponseEntity.ok(orderMapper.toCreateOrderResponse(orderCreatedEvent));
+    public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        log.debug("OrderController -> creating order from createOrderRequest = {}", createOrderRequest);
+        return ResponseEntity.ok(orderFacadeService.create(createOrderRequest));
     }
 }
