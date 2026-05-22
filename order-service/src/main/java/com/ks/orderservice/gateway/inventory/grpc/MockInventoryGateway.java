@@ -1,9 +1,9 @@
 package com.ks.orderservice.gateway.inventory.grpc;
 
-import com.ks.orderservice.dto.order.item.ItemRequest;
+import com.ks.orderservice.order.api.dto.item.ItemRequest;
 import com.ks.orderservice.gateway.inventory.InventoryGateway;
-import com.ks.orderservice.service.dto.ReservationItemResult;
-import com.ks.orderservice.service.dto.ReservationResult;
+import com.ks.orderservice.gateway.inventory.grpc.dto.ReservationItemResult;
+import com.ks.orderservice.gateway.inventory.grpc.dto.ReservationResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

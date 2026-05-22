@@ -20,14 +20,18 @@ message ReserveItemRequest {
 }
 
 message ReserveResponse {
-  repeated ReserveItemResponse itemResponse = 1;
+  ReserveItemResponseList reserveItemResponseList = 1;
   ReserveStatus status = 2;
   string errorMessage = 3;
 }
 
+message ReserveItemResponseList {
+  repeated ReserveItemResponse itemResponse = 1;
+}
+
 enum ReserveStatus {
   SUCCESS = 0;
-  PARTIAL = 1;
+  RETRY = 1;
   FAILED = 2;
 }
 
@@ -37,9 +41,7 @@ message ReserveItemResponse {
   int32 reserved = 3;
   Money price = 4;
   int32 discount = 5;
-
   Availability availability = 6;
-  bool degraded = 7;
 }
 
 message Money {

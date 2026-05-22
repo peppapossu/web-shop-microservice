@@ -3,12 +3,12 @@ package com.ks.orderservice.gateway.inventory.grpc;
 
 import com.ks.items.v1.ItemsInventoryServiceGrpc;
 import com.ks.items.v1.ReserveRequest;
-import com.ks.orderservice.dto.order.item.ItemRequest;
+import com.ks.orderservice.gateway.inventory.grpc.mapper.InventoryProtoMapper;
+import com.ks.orderservice.gateway.inventory.grpc.mapper.InventoryResultProto;
+import com.ks.orderservice.order.api.dto.item.ItemRequest;
 import com.ks.orderservice.gateway.inventory.InventoryGateway;
-import com.ks.orderservice.service.dto.ReservationItemResult;
-import com.ks.orderservice.gateway.inventory.grpc.mapper.ProtoMapper;
-import com.ks.orderservice.gateway.inventory.grpc.mapper.ResultProto;
-import com.ks.orderservice.service.dto.ReservationResult;
+import com.ks.orderservice.gateway.inventory.grpc.dto.ReservationItemResult;
+import com.ks.orderservice.gateway.inventory.grpc.dto.ReservationResult;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class GrpcInventoryGateway implements InventoryGateway {
 
-    private final ProtoMapper protoMapper;
-    private final ResultProto resultProtoMapper;
+    private final InventoryProtoMapper inventoryProtoMapper;
+    private final InventoryResultProto inventoryResultProto;
 
     @GrpcClient("inventory-service")
     private ItemsInventoryServiceGrpc.ItemsInventoryServiceBlockingStub stub;
@@ -37,10 +37,10 @@ public class GrpcInventoryGateway implements InventoryGateway {
     @Retry(name = "inventory")
     public ReservationResult reserve(String requestId, List<ItemRequest> itemsRequest) {
 
-        return resultProtoMapper.toReservationResult(stub.withDeadlineAfter(3, TimeUnit.SECONDS)
+        return inventoryResultProto.toReservationResult(stub.withDeadlineAfter(3, TimeUnit.SECONDS)
                 .reserveItems(ReserveRequest.newBuilder()
                         .setId(requestId)
-                        .addAllItems(protoMapper.toReserveItemRequestList(itemsRequest))
+                        .addAllItems(inventoryProtoMapper.toReserveItemRequestList(itemsRequest))
                         .build()
                 ));
     }

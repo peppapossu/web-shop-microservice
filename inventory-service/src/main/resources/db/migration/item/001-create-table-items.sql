@@ -7,7 +7,7 @@
 CREATE TABLE items
 (
     id       BIGSERIAL PRIMARY KEY,
-    name     VARCHAR(255)   NOT NULL,
+    name     TEXT   NOT NULL,
     price    DECIMAL(19, 2) NOT NULL,
     quantity INT            NOT NULL,
     discount INT
